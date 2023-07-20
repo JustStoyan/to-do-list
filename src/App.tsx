@@ -7,6 +7,7 @@ function App() {
   const newListItem = useRef<HTMLInputElement>(null);
   const [toDoList, setToDoList] = useState<string[]>([]);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [taskToUpdate, setTaskToUpdate] = useState("");
 
   //Check if the toDo exists already
   const checkIfExists = (currentList: string[], task: string) => {
@@ -42,21 +43,19 @@ function App() {
   };
 
   //Update a certain toDo in the list.
-  const updateTaskHandler = (
-    e: any,
-    newText: string
-  ) => {
-    const oldTaskIndex = toDoList.indexOf(e.target.parentElement.parentElement.id);
-    setToDoList((prev: string[]) => prev.splice(oldTaskIndex, 1, newText));
+  const updateTaskHandler = (newText: string) => {
+    const oldTaskIndex = toDoList.indexOf(taskToUpdate);
+    console.log(toDoList);
+    setToDoList((prev: string[]) => {
+      const newList = prev.splice(oldTaskIndex, 1, newText);
+      console.log(newList);
+      return prev;
+    });
   };
 
   const triggerUpdateMode = (e: any) => {
-    const currentTask: string = e.target.parentElement.parentElement.id;
     setIsUpdating((prev) => (prev = true));
-
-   
-      <EditTask currentTask={currentTask} updateHandler={updateTaskHandler} />
-    
+    setTaskToUpdate((prev) => (prev = e.target.parentElement.parentElement.id));
   };
 
   //Remove from the list functionality
@@ -79,19 +78,25 @@ function App() {
       </form>
 
       <div>
-        <ol>
+        <ol className="flex justify-center items-center flex-col gap-3">
           {toDoList.map((toDo) => (
-            <li key={toDo} id={toDo}>
+            <li className="flex flex-row gap-3" key={toDo} id={toDo}>
               {toDo}
-              <span>
+              <div className="flex flex-row gap-1">
                 <button onClick={triggerUpdateMode}>Edit</button>
                 <button onClick={removeFromListHandler}>Delete</button>
-              </span>
+              </div>
             </li>
           ))}
         </ol>
       </div>
-      {isUpdating && <EditTask/>}
+      {isUpdating && (
+        <EditTask
+          setIsUpdating={setIsUpdating}
+          prevTaskName={taskToUpdate}
+          updateTaskHandler={updateTaskHandler}
+        />
+      )}
     </div>
   );
 }
