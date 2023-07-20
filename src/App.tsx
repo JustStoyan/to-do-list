@@ -4,8 +4,12 @@ import Form from "./components/Form";
 import EditTask from "./components/EditTask";
 
 function App() {
+  const listFromLocal = localStorage.getItem("currentList");
+
   const newListItem = useRef<HTMLInputElement>(null);
-  const [toDoList, setToDoList] = useState<string[]>([]);
+  const [toDoList, setToDoList] = useState<string[]>(
+    (listFromLocal && JSON.parse(listFromLocal)) || []
+  );
   const [isUpdating, setIsUpdating] = useState(false);
   const [taskToUpdate, setTaskToUpdate] = useState("");
 
@@ -15,6 +19,11 @@ function App() {
     return currentList.indexOf(task);
   };
 
+  const updateLocalStorage = (currentList: string[] | undefined) => {
+    const toDoList = JSON.stringify(currentList);
+    localStorage.setItem("currentList", toDoList);
+  };
+
   //Add a new toDo to the list .
   const addToListHandler = (e: React.FormEvent<EventTarget>) => {
     e.preventDefault();
@@ -22,7 +31,10 @@ function App() {
       if (prev.length === 0) {
         const newList = [];
         newList.push(newListItem.current ? newListItem.current.value : "");
-        return newList;
+        updateLocalStorage(newList);
+        const currentList = localStorage.getItem("currentList");
+        const listToArray = JSON.parse(currentList ? currentList : "");
+        return listToArray;
       } else {
         const newList = [...prev];
 
@@ -37,7 +49,10 @@ function App() {
           );
         }
 
-        return newList;
+        updateLocalStorage(newList);
+        const currentList = localStorage.getItem("currentList");
+        const listToArray = JSON.parse(currentList ? currentList : "");
+        return listToArray;
       }
     });
   };
@@ -45,10 +60,9 @@ function App() {
   //Update a certain toDo in the list.
   const updateTaskHandler = (newText: string) => {
     const oldTaskIndex = toDoList.indexOf(taskToUpdate);
-    console.log(toDoList);
     setToDoList((prev: string[]) => {
       const newList = prev.splice(oldTaskIndex, 1, newText);
-      console.log(newList);
+      updateLocalStorage(prev);
       return prev;
     });
   };
@@ -66,6 +80,7 @@ function App() {
       const newState = prev.filter((element) => {
         return element != e.target.parentElement.parentElement.id;
       });
+      updateLocalStorage(newState);
       return newState;
     });
   };
