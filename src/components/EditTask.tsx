@@ -11,6 +11,7 @@ const EditTask = ({prevTaskName,setIsUpdating,updateTaskHandler}:Partial<EditPro
   const [task, setTask] = useState(prevTaskName || '')
 
   const updateTitleHandler = (e: any) => {
+    
     prevTaskName && setTask((prev: string) => (prev = e.target.value));
   };
  
