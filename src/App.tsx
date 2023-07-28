@@ -32,8 +32,8 @@ function App() {
   };
 
   return (
-    <div className="bg-background-dark text-text-dark">
-      <div className="flex flex-col items-center w-screen h-screen p-10">
+    <div className="bg-background-dark text-text-dark static">
+      <div className="flex flex-col items-center w-screen h-screen">
         <AddTask setToDoList={setToDoList} />
         <Modal>
           {toDoList.length !== 0 ? (
@@ -46,14 +46,14 @@ function App() {
           ) : (
             <EmptyList />
           )}
-          {isUpdating && (
-            <EditTask
-              setIsUpdating={setIsUpdating}
-              prevTaskName={taskToUpdate}
-              updateTaskHandler={updateTaskHandler}
-            />
-          )}
         </Modal>
+        {isUpdating && (
+          <EditTask
+            setIsUpdating={setIsUpdating}
+            prevTaskName={taskToUpdate}
+            updateTaskHandler={updateTaskHandler}
+          />
+        )}
       </div>
     </div>
   );
