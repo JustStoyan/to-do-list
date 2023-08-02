@@ -48,16 +48,16 @@ const ListWithTasks = ({
 
   return (
     <div>
-      <ul className="flex flex-col gap-1 p-2 pl-10  ">
+      <ul>
         {transoformedList.map((toDo: any) => (
-          <li className="flex flex-row gap-3" key={toDo.id} id={toDo.id}>
+          <li key={toDo.id} id={toDo.id}>
             <Task
               onClick={changeCheckHandler}
               id={toDo.id}
               text={toDo.text}
               isChecked={toDo.isChecked}
             />
-            <div className="flex flex-row gap-1">
+            <div>
               <button onClick={triggerUpdateMode}>Edit</button>
               <button onClick={removeFromListHandler}>Delete</button>
             </div>

@@ -26,15 +26,15 @@ const AddTask = (props: any) => {
   };
 
   return (
-    <div className=" flex justify-center items-center w-screen border h-[20%] ">
-      <form onSubmit={submitTaskNameHandler} className="flex gap-3">
+    <div>
+      <form onSubmit={submitTaskNameHandler} >
         <input
-          className="border-2 text-xl p-2 w-[24rem] h-[3.5rem] bg-background-dark"
+         
           type="text"
           value={taskName}
           onChange={taskNameHandler}
         />
-        <button className="text-2xl font-bold uppercase">Add</button>
+        <button>Add</button>
       </form>
     </div>
   );

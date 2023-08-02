@@ -32,8 +32,8 @@ function App() {
   };
 
   return (
-    <div className="bg-background-dark text-text-dark static">
-      <div className="flex flex-col items-center w-screen h-screen">
+    <div>
+      <div>
         <AddTask setToDoList={setToDoList} />
         <Modal>
           {toDoList.length !== 0 ? (
