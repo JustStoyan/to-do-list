@@ -1,5 +1,9 @@
 import { updateLocalStorage } from "../utils";
 import Task from "./Task";
+import BinIcon from "./UI/Icons/BinIcon";
+import EditIcon from "./UI/Icons/EditIcon";
+
+import styles from "./ListWithTasks.module.css";
 
 const ListWithTasks = ({
   setIsUpdating,
@@ -26,7 +30,8 @@ const ListWithTasks = ({
   const triggerUpdateMode = (e: any) => {
     setIsUpdating((prev: boolean) => (prev = true));
     setTaskToUpdate((prev: string) => {
-      return (prev = e.target.parentElement.parentElement.id);
+      console.log(e.target.id);
+      return (prev = e.target.id);
     });
   };
 
@@ -48,18 +53,34 @@ const ListWithTasks = ({
 
   return (
     <div>
-      <ul>
+      <ul className={styles["wrapper"]}>
         {transoformedList.map((toDo: any) => (
-          <li key={toDo.id} id={toDo.id}>
+          <li
+            className={styles["task-wrapper"]}
+            key={toDo.id}
+            id={toDo.id}
+            value={toDo.text}
+          >
             <Task
               onClick={changeCheckHandler}
               id={toDo.id}
               text={toDo.text}
               isChecked={toDo.isChecked}
             />
-            <div>
-              <button onClick={triggerUpdateMode}>Edit</button>
-              <button onClick={removeFromListHandler}>Delete</button>
+            <div className={styles["actions"]}>
+              <div
+                className={styles["icon-wrapper"]}
+                onClick={triggerUpdateMode}
+                id={toDo.id}
+              >
+                <EditIcon />
+              </div>
+              <div
+                className={styles["icon-wrapper"]}
+                onClick={removeFromListHandler}
+              >
+                <BinIcon />
+              </div>
             </div>
           </li>
         ))}

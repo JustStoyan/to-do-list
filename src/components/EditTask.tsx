@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import styles from "./EditTask.module.css";
+import { Button } from "./UI/Button";
 
 interface EditProps {
   prevTaskName: string;
@@ -27,14 +29,14 @@ const EditTask = ({
   };
 
   return (
-    <div>
-      <div>
+    <div className={styles['wrapper']}>
+      <div className={styles['edit-window']}>
         <h4>Edit</h4>
         <p>You can chagne the task from here: </p>
         <input type="text" value={task} onChange={updateTitleHandler} />
         <div>
-          <button onClick={updateAndCloseModal}>Save</button>
-          <button onClick={closeModal}>Cancel</button>
+          <Button type="secondary" onAction={updateAndCloseModal}>Save</Button>
+          <Button type="secondary" onAction={closeModal}>Cancel</Button>
         </div>
       </div>
     </div>

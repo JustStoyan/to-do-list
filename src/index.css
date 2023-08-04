@@ -1,9 +1,19 @@
-/* Google fonts Lato 300,400 */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+/* Google fonts DM Sans 300,500,700 */
 
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,700&family=Lato:wght@300;400&display=swap");
 
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+}
+
+svg {
+    z-index: 1;
+    pointer-events: none;
+    
 }

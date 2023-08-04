@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./Task.module.css";
 
 interface TaskInterface {
   id: string;
@@ -9,14 +10,17 @@ interface TaskInterface {
 
 const Task = ({ id, text, isChecked = false, onClick }: TaskInterface) => {
   return (
-    <div>
+    <div className={styles["wrapper"]}>
       <input
+        className={styles["checkbox"]}
         onClick={onClick}
         type="checkbox"
         id={id}
         defaultChecked={isChecked}
       />
-      <label htmlFor={id}>{text}</label>
+      <label className={styles["label"]} htmlFor={id}>
+        {text}
+      </label>
     </div>
   );
 };

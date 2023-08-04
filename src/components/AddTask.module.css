@@ -1,0 +1,13 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input {
+    font-size: 30px;
+    background: none;
+    border: none;
+    padding: 10px;
+    
+}

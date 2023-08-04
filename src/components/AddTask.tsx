@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { Button } from "./UI/Button";
+import { Input } from "./UI/Input";
+
+import styles from './AddTask.module.css'
 
 const AddTask = (props: any) => {
   const [taskName, setTaskName] = useState("");
@@ -10,8 +14,11 @@ const AddTask = (props: any) => {
   const submitTaskNameHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
+    const timestamp = new Date().valueOf();
+    const id = taskName + timestamp;
+
     const newTask = {
-      id: taskName,
+      id,
       text: taskName,
       isChecked: false,
     };
@@ -27,14 +34,9 @@ const AddTask = (props: any) => {
 
   return (
     <div>
-      <form onSubmit={submitTaskNameHandler} >
-        <input
-         
-          type="text"
-          value={taskName}
-          onChange={taskNameHandler}
-        />
-        <button>Add</button>
+      <form className={styles['wrapper']} onSubmit={submitTaskNameHandler}>
+        <Input className={styles['input']}  placeholder= "Add your task from here" type="text" value={taskName} onChange={taskNameHandler} />
+        <Button type="primary">Add</Button>
       </form>
     </div>
   );

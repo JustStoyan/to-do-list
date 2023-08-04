@@ -5,6 +5,9 @@ import { updateLocalStorage } from "./utils";
 import ListWithTasks from "./components/ListWithTasks";
 import EmptyList from "./components/EmptyList";
 import Modal from "./components/Modal";
+import Header from "./components/Header";
+
+import styles from "./App.module.css";
 
 function App() {
   const listFromLocal = localStorage.getItem("currentList");
@@ -19,11 +22,14 @@ function App() {
   const updateTaskHandler = (newText: string) => {
     const updatedList: string[] = toDoList.map((task, index) => {
       let parsedTask = JSON.parse(task);
+      console.log( parsedTask.id)
+      console.log(taskToUpdate)
 
       if (parsedTask.id === taskToUpdate) {
-        parsedTask.id = newText;
         parsedTask.text = newText;
+        
       }
+      
       parsedTask = JSON.stringify(parsedTask);
       return parsedTask;
     });
@@ -32,8 +38,9 @@ function App() {
   };
 
   return (
-    <div>
-      <div>
+    <div className={styles["app-themes-light"]}>
+      <div className={styles["app-wrapper"]}>
+        <Header/>
         <AddTask setToDoList={setToDoList} />
         <Modal>
           {toDoList.length !== 0 ? (

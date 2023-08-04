@@ -1,0 +1,15 @@
+.app-theme-white {
+}
+
+.app-theme-dark {
+}
+
+.app-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: static;
+  display: flex;
+  flex-flow: wrap column;
+  gap: 8rem;
+  overflow: hidden;
+}
