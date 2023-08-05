@@ -1,4 +1,4 @@
-import { updateLocalStorage } from "../utils";
+import { updateListInLocalStorage } from "../utils";
 import Task from "./Task";
 import BinIcon from "./UI/Icons/BinIcon";
 import EditIcon from "./UI/Icons/EditIcon";
@@ -21,7 +21,7 @@ const ListWithTasks = ({
         task = JSON.stringify(task);
         return task;
       });
-      updateLocalStorage(newList);
+      updateListInLocalStorage(newList);
       return newList;
     });
   };
@@ -29,9 +29,11 @@ const ListWithTasks = ({
   //Opens the update modal
   const triggerUpdateMode = (e: any) => {
     setIsUpdating((prev: boolean) => (prev = true));
-    setTaskToUpdate((prev: string) => {
-      console.log(e.target.id);
-      return (prev = e.target.id);
+    setTaskToUpdate((prev: Object) => {
+      return (prev = {
+        id: e.target.id,
+        text: e.target.title,
+      });
     });
   };
 
@@ -40,9 +42,9 @@ const ListWithTasks = ({
     setToDoList((prev: string[]) => {
       const newState = prev.filter((element) => {
         let objElement = JSON.parse(element);
-        return objElement.id !== e.target.parentElement.parentElement.id;
+        return objElement.id !== e.target.id;
       });
-      updateLocalStorage(newState);
+      updateListInLocalStorage(newState);
       return newState;
     });
   };
@@ -72,12 +74,14 @@ const ListWithTasks = ({
                 className={styles["icon-wrapper"]}
                 onClick={triggerUpdateMode}
                 id={toDo.id}
+                title={toDo.text}
               >
                 <EditIcon />
               </div>
               <div
                 className={styles["icon-wrapper"]}
                 onClick={removeFromListHandler}
+                id={toDo.id}
               >
                 <BinIcon />
               </div>

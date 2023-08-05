@@ -19,7 +19,7 @@ const Task = ({ id, text, isChecked = false, onClick }: TaskInterface) => {
         defaultChecked={isChecked}
       />
       <label className={styles["label"]} htmlFor={id}>
-        {text}
+        <span className={isChecked ? styles["checked"] : ""}> {text}</span>
       </label>
     </div>
   );

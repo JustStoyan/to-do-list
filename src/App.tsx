@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import AddTask from "./components/AddTask";
 import EditTask from "./components/EditTask";
-import { updateLocalStorage } from "./utils";
+import { updateListInLocalStorage, updateThemeInLocalStorage } from "./utils";
 import ListWithTasks from "./components/ListWithTasks";
 import EmptyList from "./components/EmptyList";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
 
 import styles from "./App.module.css";
+
+export interface TaskToUpdateInterface {
+  id: string;
+  text: string;
+}
 
 function App() {
   const listFromLocal = localStorage.getItem("currentList");
@@ -16,31 +21,54 @@ function App() {
     (listFromLocal && JSON.parse(listFromLocal)) || []
   );
   const [isUpdating, setIsUpdating] = useState(false);
-  const [taskToUpdate, setTaskToUpdate] = useState("");
+  const [taskToUpdate, setTaskToUpdate] = useState<TaskToUpdateInterface>({
+    id: "",
+    text: "",
+  });
 
   //Update a certain toDo in the list.
   const updateTaskHandler = (newText: string) => {
-    const updatedList: string[] = toDoList.map((task, index) => {
+    const updatedList: string[] = toDoList.map((task) => {
       let parsedTask = JSON.parse(task);
-      console.log( parsedTask.id)
-      console.log(taskToUpdate)
 
-      if (parsedTask.id === taskToUpdate) {
+      if (parsedTask.id === taskToUpdate.id) {
         parsedTask.text = newText;
-        
       }
-      
+
       parsedTask = JSON.stringify(parsedTask);
       return parsedTask;
     });
-    updateLocalStorage(updatedList);
+    updateListInLocalStorage(updatedList);
     setToDoList((prev: string[]) => (prev = updatedList));
   };
 
+  //Start Theme settings
+  const currentTheme = localStorage.getItem("theme");
+  const [theme, setTheme] = useState(currentTheme || "light");
+  updateThemeInLocalStorage(theme);
+
+  const onSetThemeToDark = () => {
+    updateThemeInLocalStorage("dark");
+    setTheme("dark");
+  };
+
+  const onSetThemeToLight = () => {
+    updateThemeInLocalStorage("light");
+    setTheme("light");
+  };
+  //End Theme settings
   return (
-    <div className={styles["app-themes-light"]}>
+    <div
+      className={
+        theme === "light" ? styles["app-theme-light"] : styles["app-theme-dark"]
+      }
+    >
       <div className={styles["app-wrapper"]}>
-        <Header/>
+        <Header
+          onThemeChangeDark={onSetThemeToDark}
+          onThemeChangeLight={onSetThemeToLight}
+          themeStatus={theme}
+        />
         <AddTask setToDoList={setToDoList} />
         <Modal>
           {toDoList.length !== 0 ? (
@@ -57,8 +85,9 @@ function App() {
         {isUpdating && (
           <EditTask
             setIsUpdating={setIsUpdating}
-            prevTaskName={taskToUpdate}
+            taskToUpdate={taskToUpdate}
             updateTaskHandler={updateTaskHandler}
+            themeState={theme}
           />
         )}
       </div>

@@ -1,15 +1,29 @@
 .app-theme-white {
+  color: black;
+  background-color: white;
+}
+.app-theme-white input {
+  color: black;
 }
 
 .app-theme-dark {
+  color: white;
+  background-color: black;
+}
+
+.app-theme-dark input {
+  color: white;
+}
+
+.app-theme-dark svg {
+  fill: white;
 }
 
 .app-wrapper {
   width: 100vw;
   height: 100vh;
-  position: static;
   display: flex;
-  flex-flow: wrap column;
-  gap: 8rem;
+  flex-direction: column;
+  gap: 6rem;
   overflow: hidden;
 }

@@ -1,15 +1,23 @@
 .wrapper {
-    display: flex;
-    width: 100vw;
-    justify-content: space-around;
-    margin: 20px;
+  display: flex;
+  width: 100vw;
+  justify-content: space-around;
+  margin: 20px;
 }
 
 .title {
-    font-size: 48px;
+  font-size: 48px;
 }
 
 .theme-switch {
-    display: flex;
-    gap: 10px
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.current-theme {
+   border: 1px solid;
+   padding: 5px;
 }

@@ -1,25 +1,34 @@
 import React, { useState } from "react";
 import styles from "./EditTask.module.css";
 import { Button } from "./UI/Button";
+import { Input } from "./UI/Input";
+import { TaskToUpdateInterface } from "../App";
+import { checkIfInputIsEmpty } from "../utils";
 
 interface EditProps {
-  prevTaskName: string;
+  taskToUpdate: TaskToUpdateInterface;
   setIsUpdating: Function;
   updateTaskHandler: Function;
+  themeState: string;
 }
 
 const EditTask = ({
-  prevTaskName,
+  taskToUpdate,
   setIsUpdating,
   updateTaskHandler,
+  themeState,
 }: Partial<EditProps>) => {
-  const [task, setTask] = useState(prevTaskName || "");
+  const [task, setTask] = useState(taskToUpdate?.text || "");
 
   const updateTitleHandler = (e: any) => {
-    prevTaskName && setTask((prev: string) => (prev = e.target.value));
+    setTask((prev: string) => (prev = e.target.value));
   };
 
   const updateAndCloseModal = () => {
+    if (checkIfInputIsEmpty(task)) {
+      return;
+    }
+
     updateTaskHandler && updateTaskHandler(task);
     setIsUpdating && setIsUpdating(false);
   };
@@ -29,14 +38,26 @@ const EditTask = ({
   };
 
   return (
-    <div className={styles['wrapper']}>
-      <div className={styles['edit-window']}>
-        <h4>Edit</h4>
-        <p>You can chagne the task from here: </p>
-        <input type="text" value={task} onChange={updateTitleHandler} />
-        <div>
-          <Button type="secondary" onAction={updateAndCloseModal}>Save</Button>
-          <Button type="secondary" onAction={closeModal}>Cancel</Button>
+    <div className={styles["wrapper"]}>
+      <div className={styles["background"]}>
+        <div
+          className={
+            themeState === "light"
+              ? `${styles["edit-window"]} ${styles["edit-window-light"]}`
+              : `${styles["edit-window"]} ${styles["edit-window-dark"]}`
+          }
+        >
+          <h4>Edit</h4>
+          <p>You can chagne the task from here: </p>
+          <Input type="text" value={task} onChange={updateTitleHandler} />
+          <div>
+            <Button type="secondary" onAction={updateAndCloseModal}>
+              Save
+            </Button>
+            <Button type="secondary" onAction={closeModal}>
+              Cancel
+            </Button>
+          </div>
         </div>
       </div>
     </div>
