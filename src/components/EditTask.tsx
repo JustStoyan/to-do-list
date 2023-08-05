@@ -48,14 +48,20 @@ const EditTask = ({
           }
         >
           <h4>Edit</h4>
-          <p>You can chagne the task from here: </p>
+          <p>You can change the task from here: </p>
           <Input type="text" value={task} onChange={updateTitleHandler} />
-          <div>
-            <Button type="secondary" onAction={updateAndCloseModal}>
-              Save
-            </Button>
+          <div
+            className={
+              themeState === "light"
+                ? `${styles["actions"]} ${styles["actions-light"]}`
+                : `${styles["actions"]}`
+            }
+          >
             <Button type="secondary" onAction={closeModal}>
               Cancel
+            </Button>
+            <Button type="secondary" onAction={updateAndCloseModal}>
+              Save
             </Button>
           </div>
         </div>

@@ -22,6 +22,18 @@
   z-index: 1000;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  
+}
+
+.actions-light button {
+  color: white;
+}
+
 .edit-window-light {
   color: white;
   background-color: black;

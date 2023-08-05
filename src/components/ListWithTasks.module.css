@@ -6,6 +6,8 @@
   justify-content: flex-start;
   flex-direction: column;
   gap: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .task-wrapper {
