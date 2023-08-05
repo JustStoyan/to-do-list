@@ -11,7 +11,6 @@ const Header = ({
   onThemeChangeLight,
   themeStatus,
 }: HeaderInterface) => {
-  console.log(themeStatus);
   return (
     <header className={styles["wrapper"]}>
       <h1 className={styles["title"]}>To Do App</h1>

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "./EditTask.module.css";
-import { Button } from "./UI/Button";
-import { Input } from "./UI/Input";
-import { TaskToUpdateInterface } from "../App";
-import { checkIfInputIsEmpty } from "../utils";
+import { Button } from "../UI/Button";
+import { Input } from "../UI/Input";
+import { TaskToUpdateInterface } from "../../App";
+import { checkIfInputIsEmpty } from "../../utils";
 
 interface EditProps {
   taskToUpdate: TaskToUpdateInterface;

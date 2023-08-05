@@ -1,7 +1,7 @@
-import { updateListInLocalStorage } from "../utils";
-import Task from "./Task";
-import BinIcon from "./UI/Icons/BinIcon";
-import EditIcon from "./UI/Icons/EditIcon";
+import { updateListInLocalStorage } from "../../utils";
+import Task from "../Tasks/Task";
+import BinIcon from "../UI/Icons/BinIcon";
+import EditIcon from "../UI/Icons/EditIcon";
 
 import styles from "./ListWithTasks.module.css";
 

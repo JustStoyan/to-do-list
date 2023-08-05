@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button } from "./UI/Button";
-import { Input } from "./UI/Input";
-import { genUniqueId, checkIfInputIsEmpty } from "../utils";
+import { Button } from "../UI/Button";
+import { Input } from "../UI/Input";
+import { genUniqueId, checkIfInputIsEmpty } from "../../utils";
 
 import styles from "./AddTask.module.css";
 

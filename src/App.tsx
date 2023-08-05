@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import AddTask from "./components/AddTask";
-import EditTask from "./components/EditTask";
+import AddTask from "./components/Tasks/AddTask";
+import EditTask from "./components/Tasks/EditTask";
 import { updateListInLocalStorage, updateThemeInLocalStorage } from "./utils";
-import ListWithTasks from "./components/ListWithTasks";
-import EmptyList from "./components/EmptyList";
-import Modal from "./components/Modal";
+import ListWithTasks from "./components/Lists/ListWithTasks";
+import EmptyList from "./components/Lists/EmptyList";
+import Modal from "./components/Lists/Modal";
 import Header from "./components/Header";
 
 import styles from "./App.module.css";
@@ -42,7 +42,7 @@ function App() {
     setToDoList((prev: string[]) => (prev = updatedList));
   };
 
-  //Start Theme settings
+  // Theme settings Start
   const currentTheme = localStorage.getItem("theme");
   const [theme, setTheme] = useState(currentTheme || "light");
   updateThemeInLocalStorage(theme);
@@ -56,7 +56,7 @@ function App() {
     updateThemeInLocalStorage("light");
     setTheme("light");
   };
-  //End Theme settings
+  // Theme settings End
   return (
     <div
       className={
