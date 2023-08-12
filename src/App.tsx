@@ -5,7 +5,7 @@ import ListLayout from "./components/UI/Layouts/ListLayout";
 import { AppLayout } from "./components/UI/Layouts/AppLayout";
 import Header from "./components/Header";
 import { useSelector } from "react-redux";
-import { List } from "./components/Lists/List";
+import { Lists } from "./components/Lists/";
 
 
 
@@ -17,7 +17,7 @@ function App() {
       <Header />
       <AddTask />
       <ListLayout>
-        <List />
+        <Lists />
       </ListLayout>
       {isUpdating && <EditTask />}
     </AppLayout>

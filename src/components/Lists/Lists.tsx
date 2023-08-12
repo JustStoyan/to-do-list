@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import ListWithTasks from "./ListWithTasks";
 import EmptyList from "./EmptyList";
 
-export const List = () => {
+export const Lists = () => {
   const taskList = useSelector((state: any) => state.toDo.taskList);
   return (
     <Fragment>

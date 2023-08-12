@@ -9,17 +9,17 @@ import styles from "./AddTask.module.css";
 
 const AddTask = () => {
   const currentList = useSelector((state: any) => state.toDo.taskList);
-
   const dispatch = useDispatch();
-  const [taskName, setTaskName] = useState("");
 
+  //Updates the input field
+  const [taskName, setTaskName] = useState("");
   const taskNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskName((prev: string) => (prev = e.target.value));
   };
 
+  //Submit a task name, updates the list and prevents empty tasks to be submitted
   const submitTaskNameHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
-
     if (checkIfInputIsEmpty(taskName)) {
       return;
     }
