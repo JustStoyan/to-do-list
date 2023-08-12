@@ -9,6 +9,8 @@ interface TaskInterface {
 }
 
 const Task = ({ id, text, isChecked = false, onClick }: TaskInterface) => {
+
+
   return (
     <div className={styles["wrapper"]}>
       <input

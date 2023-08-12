@@ -1,29 +1,37 @@
+import { actions } from "../store";
 import styles from "./Header.module.css";
 
-interface HeaderInterface {
-  onThemeChangeDark: React.MouseEventHandler<HTMLParagraphElement>;
-  onThemeChangeLight: React.MouseEventHandler<HTMLParagraphElement>;
-  themeStatus: string;
-}
+import { updateThemeInLocalStorage } from "../utils";
 
-const Header = ({
-  onThemeChangeDark,
-  onThemeChangeLight,
-  themeStatus,
-}: HeaderInterface) => {
+import { useDispatch, useSelector } from "react-redux";
+
+const Header = () => {
+  const dispatch = useDispatch();
+  const currentTheme = useSelector((state: any) => state.toDo.theme);
+
+  const changeThemeToDark = () => {
+    dispatch(actions.changeTheme("dark"));
+    updateThemeInLocalStorage("dark");
+  };
+
+  const changeThemeToLight = () => {
+    dispatch(actions.changeTheme("light"));
+    updateThemeInLocalStorage("light");
+  };
+
   return (
     <header className={styles["wrapper"]}>
       <h1 className={styles["title"]}>To Do App</h1>
       <div className={styles["theme-switch"]}>
         <p
-          className={themeStatus === "dark" ? styles["current-theme"] : ""}
-          onClick={onThemeChangeDark}
+          className={currentTheme === "dark" ? styles["current-theme"] : ""}
+          onClick={changeThemeToDark}
         >
           Dark
         </p>
         <p
-          className={themeStatus === "light" ? styles["current-theme"] : ""}
-          onClick={onThemeChangeLight}
+          className={currentTheme === "light" ? styles["current-theme"] : ""}
+          onClick={changeThemeToLight}
         >
           Light
         </p>

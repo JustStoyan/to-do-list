@@ -1,11 +1,16 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { actions } from "../../store";
 import { Button } from "../UI/Button";
 import { Input } from "../UI/Input";
 import { genUniqueId, checkIfInputIsEmpty } from "../../utils";
 
 import styles from "./AddTask.module.css";
 
-const AddTask = ({ setToDoList }: any) => {
+const AddTask = () => {
+  const currentList = useSelector((state: any) => state.toDo.taskList);
+
+  const dispatch = useDispatch();
   const [taskName, setTaskName] = useState("");
 
   const taskNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,16 +27,11 @@ const AddTask = ({ setToDoList }: any) => {
     const id = genUniqueId(taskName.trim());
     const newTask = {
       id,
-      text: taskName.trim(),
-      isChecked: false,
+      content: taskName.trim(),
+      isCompleted: false,
     };
-
-    setToDoList((prev: string[]) => {
-      const newTaskList = [...prev];
-      newTaskList.push(JSON.stringify(newTask));
-      localStorage.setItem("currentList", JSON.stringify(newTaskList));
-      return newTaskList;
-    });
+    dispatch(actions.addTask(newTask));
+    localStorage.setItem("currentList", JSON.stringify(currentList));
     setTaskName((prev) => (prev = ""));
   };
 

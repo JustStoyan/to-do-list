@@ -1,5 +1,5 @@
 .wrapper {
-  width: 100vw;
+  width: 55vw;
   height: 60vh;
   display: flex;
   align-items: flex-start;
@@ -34,4 +34,29 @@
 
 .icon-wrapper:hover {
   cursor: pointer;
+}
+
+
+@media screen and (min-width: 375px) and (max-width: 768px) {
+  .wrapper {
+    width: 100vw;
+    height: 45vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .task-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+
 }
