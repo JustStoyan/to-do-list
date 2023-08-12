@@ -8,17 +8,19 @@ import { Input } from "../UI/Input";
 import { checkIfInputIsEmpty, updateListInLocalStorage } from "../../utils";
 
 const EditTask = () => {
+  //Collecting data from the Redux storage
   const currentTheme = useSelector((state: any) => state.toDo.theme);
   const taskToUpdate = useSelector((state: any) => state.toDo.taskToUpdate);
   const currentList = useSelector((state: any) => state.toDo.taskList);
-
   const dispatch = useDispatch();
-  const [task, setTask] = useState(taskToUpdate.content || "");
 
+  //Setting the state of the input field
+  const [task, setTask] = useState(taskToUpdate.content || "");
   const updateTitleHandler = (e: any) => {
     setTask((prev: string) => (prev = e.target.value));
   };
 
+  //Making sure that no empty fields are getting submited and updates the task while closing the edit mode
   const updateAndCloseModal = () => {
     if (checkIfInputIsEmpty(task)) {
       return;
@@ -28,7 +30,7 @@ const EditTask = () => {
     dispatch(actions.isEditing(false));
     updateListInLocalStorage(currentList);
   };
-
+  //Closes the edit mode only
   const closeModal = () => {
     dispatch(actions.isEditing(false));
   };

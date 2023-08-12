@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import { updateListInLocalStorage } from "../../utils";
 import Task from "../Tasks/Task";
 import BinIcon from "../UI/Icons/BinIcon";
@@ -7,28 +9,20 @@ import { actions } from "../../store";
 
 import styles from "./ListWithTasks.module.css";
 
-const ListWithTasks = ({ setToDoList }: any) => {
+const ListWithTasks = () => {
   const currentList = useSelector((state: any) => state.toDo.taskList);
-
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    updateListInLocalStorage(currentList);
+  }, [currentList, dispatch]);
 
   // Set the checkbox to be checked or unchecked and updates the list
   const changeCheckHandler = (e: any) => {
-    setToDoList((prev: string[]) => {
-      const newList = prev.map((toDo: any) => {
-        let task = JSON.parse(toDo);
-
-        e.target.id === task.id && (task.isChecked = !task.isChecked);
-        task = JSON.stringify(task);
-        return task;
-      });
-      updateListInLocalStorage(newList);
-      return newList;
-    });
+    dispatch(actions.changeCompleteStatus(e.target.id));
   };
 
   //Opens the update modal
-
   const triggerUpdateMode = (e: any) => {
     const id = e.target.id;
     const content = e.target.title;
@@ -36,10 +30,10 @@ const ListWithTasks = ({ setToDoList }: any) => {
     dispatch(actions.setTaskToUpdate({ id, content }));
   };
 
+  //Removes a task from the list
   const removeFromListHandler = (e: any) => {
     const currentTaskId = e.target.id;
     dispatch(actions.removeTask(currentTaskId));
-    updateListInLocalStorage(currentList);
   };
 
   return (

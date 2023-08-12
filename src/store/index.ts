@@ -59,6 +59,19 @@ const toDoSlice = createSlice({
       const currentTask: TaskInterface = { ...action.payload };
       state.taskToUpdate = currentTask;
     },
+    changeCompleteStatus: (state, action) => {
+      const taskId = action.payload;
+      const updatedTaskList = state.taskList.map((task) => {
+        if (task.id === taskId) {
+          task.isCompleted = !task.isCompleted;
+          return task;
+        } else {
+          return task;
+        }
+      });
+
+      state.taskList = [...updatedTaskList];
+    },
   },
 });
 
