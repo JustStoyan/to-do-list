@@ -2,15 +2,16 @@ import { updateListInLocalStorage } from "../../utils";
 import Task from "../Tasks/Task";
 import BinIcon from "../UI/Icons/BinIcon";
 import EditIcon from "../UI/Icons/EditIcon";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store";
 
 import styles from "./ListWithTasks.module.css";
 
-const ListWithTasks = ({
-  setIsUpdating,
-  setTaskToUpdate,
-  setToDoList,
-  toDoList,
-}: any) => {
+const ListWithTasks = ({ setToDoList }: any) => {
+  const currentList = useSelector((state: any) => state.toDo.taskList);
+
+  const dispatch = useDispatch();
+
   // Set the checkbox to be checked or unchecked and updates the list
   const changeCheckHandler = (e: any) => {
     setToDoList((prev: string[]) => {
@@ -27,61 +28,49 @@ const ListWithTasks = ({
   };
 
   //Opens the update modal
+
   const triggerUpdateMode = (e: any) => {
-    setIsUpdating((prev: boolean) => (prev = true));
-    setTaskToUpdate((prev: Object) => {
-      return (prev = {
-        id: e.target.id,
-        text: e.target.title,
-      });
-    });
+    const id = e.target.id;
+    const content = e.target.title;
+    dispatch(actions.isEditing(true));
+    dispatch(actions.setTaskToUpdate({ id, content }));
   };
 
-  //Remove from the list functionality
   const removeFromListHandler = (e: any) => {
-    setToDoList((prev: string[]) => {
-      const newState = prev.filter((element) => {
-        let objElement = JSON.parse(element);
-        return objElement.id !== e.target.id;
-      });
-      updateListInLocalStorage(newState);
-      return newState;
-    });
+    const currentTaskId = e.target.id;
+    dispatch(actions.removeTask(currentTaskId));
+    updateListInLocalStorage(currentList);
   };
-
-  const transoformedList = toDoList.map((toDo: any) => {
-    return JSON.parse(toDo);
-  });
 
   return (
     <div>
       <ul className={styles["wrapper"]}>
-        {transoformedList.map((toDo: any) => (
+        {currentList.map((task: any) => (
           <li
             className={styles["task-wrapper"]}
-            key={toDo.id}
-            id={toDo.id}
-            value={toDo.text}
+            key={task.id}
+            id={task.id}
+            value={task.content}
           >
             <Task
               onClick={changeCheckHandler}
-              id={toDo.id}
-              text={toDo.text}
-              isChecked={toDo.isChecked}
+              id={task.id}
+              text={task.content}
+              isChecked={task.isCompleted}
             />
             <div className={styles["actions"]}>
               <div
                 className={styles["icon-wrapper"]}
                 onClick={triggerUpdateMode}
-                id={toDo.id}
-                title={toDo.text}
+                id={task.id}
+                title={task.content}
               >
                 <EditIcon />
               </div>
               <div
                 className={styles["icon-wrapper"]}
                 onClick={removeFromListHandler}
-                id={toDo.id}
+                id={task.id}
               >
                 <BinIcon />
               </div>

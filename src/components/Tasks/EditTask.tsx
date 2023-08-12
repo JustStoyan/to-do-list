@@ -1,25 +1,19 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store";
 
 import styles from "./EditTask.module.css";
 import { Button } from "../UI/Button";
 import { Input } from "../UI/Input";
-import { TaskToUpdateInterface } from "../../App";
-import { checkIfInputIsEmpty } from "../../utils";
+import { checkIfInputIsEmpty, updateListInLocalStorage } from "../../utils";
 
-interface EditProps {
-  taskToUpdate: TaskToUpdateInterface;
-  setIsUpdating: Function;
-  updateTaskHandler: Function;
-}
-
-const EditTask = ({
-  taskToUpdate,
-  setIsUpdating,
-  updateTaskHandler,
-}: Partial<EditProps>) => {
+const EditTask = () => {
   const currentTheme = useSelector((state: any) => state.toDo.theme);
-  const [task, setTask] = useState(taskToUpdate?.text || "");
+  const taskToUpdate = useSelector((state: any) => state.toDo.taskToUpdate);
+  const currentList = useSelector((state: any) => state.toDo.taskList);
+
+  const dispatch = useDispatch();
+  const [task, setTask] = useState(taskToUpdate.content || "");
 
   const updateTitleHandler = (e: any) => {
     setTask((prev: string) => (prev = e.target.value));
@@ -30,12 +24,13 @@ const EditTask = ({
       return;
     }
 
-    updateTaskHandler && updateTaskHandler(task);
-    setIsUpdating && setIsUpdating(false);
+    dispatch(actions.editTask({ id: taskToUpdate.id, content: task }));
+    dispatch(actions.isEditing(false));
+    updateListInLocalStorage(currentList);
   };
 
   const closeModal = () => {
-    setIsUpdating && setIsUpdating(false);
+    dispatch(actions.isEditing(false));
   };
 
   return (

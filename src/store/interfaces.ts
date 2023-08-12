@@ -1,14 +1,12 @@
 export interface TaskInterface {
-    id: string;
-    isCompleted: boolean;
-    content: string;
-  }
-  
+  id: string;
+  content: string;
+  isCompleted?: boolean;
+}
 
 export interface ToDoStore {
   theme: "dark" | "light";
   taskList: TaskInterface[];
-  isUpdating: boolean
+  isUpdating: boolean;
+  taskToUpdate: TaskInterface;
 }
-
-

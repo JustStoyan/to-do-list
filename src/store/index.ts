@@ -5,8 +5,7 @@ import { TaskInterface, ToDoStore } from "./interfaces";
 
 const currentTaskList: any = localStorage.getItem("currentList");
 const currentTasks =
-  currentTaskList &&
-  JSON.parse(currentTaskList).map((task: any) => JSON.parse(task));
+  currentTaskList && JSON.parse(currentTaskList).map((task: any) => task);
 
 const currentTheme: any = localStorage.getItem("theme");
 
@@ -14,6 +13,10 @@ const initialState: ToDoStore = {
   theme: currentTheme ? currentTheme : "light",
   taskList: currentTaskList && currentTaskList.length === 0 ? [] : currentTasks,
   isUpdating: false,
+  taskToUpdate: {
+    id: "",
+    content: "",
+  },
 };
 
 const toDoSlice = createSlice({
@@ -26,18 +29,35 @@ const toDoSlice = createSlice({
     },
     addTask: (state, action) => {
       const newTask: TaskInterface = action.payload;
-      state.taskList = [...state.taskList, newTask];
+      if (!state.taskList) {
+        state.taskList = [newTask];
+      } else {
+        state.taskList = [...state.taskList, newTask];
+      }
     },
     removeTask: (state, action) => {
       const taskId: any = action.payload;
-      state.taskList = state.taskList.filter(taskId);
+      state.taskList = state.taskList.filter((task) => task.id !== taskId);
     },
     editTask: (state, action) => {
-      const [index, content] = [...action.payload];
-      state.taskList[index].content = content;
+      const newTask = { ...action.payload };
+      const newTaskList = state.taskList.map((task) => {
+        if (task.id === newTask.id) {
+          task.content = newTask.content;
+          return task;
+        } else {
+          return task;
+        }
+      });
+
+      state.taskList = [...newTaskList];
     },
     isEditing: (state, action) => {
       state.isUpdating = action.payload;
+    },
+    setTaskToUpdate: (state, action) => {
+      const currentTask: TaskInterface = { ...action.payload };
+      state.taskToUpdate = currentTask;
     },
   },
 });
