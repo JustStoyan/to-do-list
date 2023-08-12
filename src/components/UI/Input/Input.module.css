@@ -1,13 +1,14 @@
 .input {
-    font-size: 1.5rem;
-    background: none;
-    border: none;
-    border-bottom: 2px solid;
-    padding: 10px;
-    
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid;
+  padding: 10px;
 }
 
+
+
 .input:focus {
-    border-bottom: none;
-    border: 1px solid;
+  border-bottom: none;
+  border: 1px solid;
 }

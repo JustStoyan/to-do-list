@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+
 import styles from "./EditTask.module.css";
 import { Button } from "../UI/Button";
 import { Input } from "../UI/Input";
@@ -9,15 +11,14 @@ interface EditProps {
   taskToUpdate: TaskToUpdateInterface;
   setIsUpdating: Function;
   updateTaskHandler: Function;
-  themeState: string;
 }
 
 const EditTask = ({
   taskToUpdate,
   setIsUpdating,
   updateTaskHandler,
-  themeState,
 }: Partial<EditProps>) => {
+  const currentTheme = useSelector((state: any) => state.toDo.theme);
   const [task, setTask] = useState(taskToUpdate?.text || "");
 
   const updateTitleHandler = (e: any) => {
@@ -42,7 +43,7 @@ const EditTask = ({
       <div className={styles["background"]}>
         <div
           className={
-            themeState === "light"
+            currentTheme === "light"
               ? `${styles["edit-window"]} ${styles["edit-window-light"]}`
               : `${styles["edit-window"]} ${styles["edit-window-dark"]}`
           }
@@ -52,7 +53,7 @@ const EditTask = ({
           <Input type="text" value={task} onChange={updateTitleHandler} />
           <div
             className={
-              themeState === "light"
+              currentTheme === "light"
                 ? `${styles["actions"]} ${styles["actions-light"]}`
                 : `${styles["actions"]}`
             }

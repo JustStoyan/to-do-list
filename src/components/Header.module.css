@@ -18,6 +18,12 @@
 }
 
 .current-theme {
-   border: 1px solid;
-   padding: 5px;
+  border: 1px solid;
+  padding: 5px;
+}
+
+@media screen and (min-width: 375px) and (max-width: 768px) {
+  .title {
+    font-size: 36px;
+  }
 }
